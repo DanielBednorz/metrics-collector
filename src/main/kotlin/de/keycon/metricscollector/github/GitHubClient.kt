@@ -6,18 +6,22 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestTemplate
+import org.springframework.web.util.UriComponentsBuilder
 import java.net.URI
 
 
 @Component
 class GitHubClient(
     val restTemplate: RestTemplate,
-    val githubProperties: GithubProperties
+    val gitHubProperties: GitHubProperties
 ) {
 
     fun getRepoInfo(repositoryPath: String): GitHubRepo {
 
-        val uri = URI("${githubProperties.api}/repos/$repositoryPath")
+        val uri = UriComponentsBuilder.newInstance()
+            .uri(URI(gitHubProperties.repos))
+            .pathSegment(repositoryPath)
+            .build().toUri()
 
         val requestEntity = HttpEntity(null, createAuthorizationHeader())
 
@@ -27,7 +31,7 @@ class GitHubClient(
 
     fun createAuthorizationHeader(): HttpHeaders {
         val httpHeaders = HttpHeaders()
-        httpHeaders.set("Authorization", githubProperties.credentials)
+        httpHeaders.set("Authorization", gitHubProperties.credentials)
         return httpHeaders
     }
 }

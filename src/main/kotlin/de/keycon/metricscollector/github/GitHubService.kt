@@ -3,13 +3,13 @@ package de.keycon.metricscollector.github
 import org.springframework.stereotype.Service
 
 @Service
-class GithubService(
-    val githubProperties: GithubProperties,
+class GitHubService(
+    val gitHubProperties: GitHubProperties,
     val gitHubClient: GitHubClient
 ) {
 
     fun getRepos(): List<GitHubRepo> {
-        return githubProperties.urls.map {
+        return gitHubProperties.urls.map {
             gitHubClient.getRepoInfo(it)
         }
     }

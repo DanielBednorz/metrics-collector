@@ -1,6 +1,5 @@
 github:
-  username:
-  password:
-  api: https://api.github.com
+  credentials:
+  repos: https://api.github.com/repos
   urls:
     - DanielBednorz/metrics-collector
