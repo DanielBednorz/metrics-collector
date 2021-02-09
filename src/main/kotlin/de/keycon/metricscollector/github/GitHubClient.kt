@@ -2,6 +2,7 @@ package de.keycon.metricscollector.github
 
 import de.keycon.metricscollector.exception.NotFoundException
 import org.springframework.http.HttpEntity
+import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestTemplate
@@ -18,9 +19,15 @@ class GitHubClient(
 
         val uri = URI("${githubProperties.api}/repos/$repositoryPath")
 
-        val requestEntity = HttpEntity(null, null)
+        val requestEntity = HttpEntity(null, createAuthorizationHeader())
 
         val result = restTemplate.exchange(uri, HttpMethod.GET, requestEntity, GitHubRepo::class.java)
         return result.body ?: throw NotFoundException("No repositories found for '$repositoryPath'")
+    }
+
+    fun createAuthorizationHeader(): HttpHeaders {
+        val httpHeaders = HttpHeaders()
+        httpHeaders.set("Authorization", githubProperties.credentials)
+        return httpHeaders
     }
 }
