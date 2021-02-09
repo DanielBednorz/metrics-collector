@@ -1,0 +1,4 @@
+github:
+  api: https://api.github.com
+  urls:
+    - DanielBednorz/metrics-collector
