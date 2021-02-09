@@ -8,7 +8,7 @@ class GitHubService(
     val gitHubClient: GitHubClient
 ) {
 
-    fun getRepos(): List<GitHubRepo> {
+    fun getGitHubRepos(): List<GitHubRepo> {
         return gitHubProperties.urls.map {
             gitHubClient.getRepoInfo(it)
         }

@@ -13,6 +13,6 @@ class Scheduler(
 
     @Scheduled(fixedRate = 5000)
     fun logResult() {
-        logger.info("Found repos: {}", gitHubService.getRepos())
+        logger.info("Found repos: {}", gitHubService.getGitHubRepos())
     }
 }
